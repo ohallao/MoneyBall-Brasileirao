@@ -90,7 +90,7 @@ Essa configuração permite que dados do Campeonato Brasileiro sejam mapeados co
    ```
 2. Instale as dependências:
    ```bash
-   pip install pandas numpy matplotlib seaborn scikit-learn fuzzywuzzy
+   pip install soccerdata pandas numpy matplotlib seaborn scikit-learn fuzzywuzzy
    ```
 3. Adicione o arquivo `league_dict.json` na pasta mencionada acima.
 4. Execute o notebook em Jupyter ou VSCode.
