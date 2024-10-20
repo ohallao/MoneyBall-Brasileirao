@@ -16,8 +16,8 @@ O foco é explorar a correlação entre valor de mercado e desempenho dos clubes
 ## **Etapas do Projeto**
 
 ### **1. Coleta de Dados**
-- **Fontes:** OpenLiga, Football Data, Sofascore, Transfermarkt, FIFA.
-- **Competições:** Série A, Libertadores, Liga dos Campeões.
+- **Fontes:** Fbref, Sofascore, Transfermarkt.
+- **Competições:** Campeonato Brasileiro Serie A.(Mais Ligas Futuramente)
 - **Variáveis:** Gols, assistências, passes certos, interceptações, valor de mercado, minutos jogados, entre outros.
 
 ### **2. Análise Exploratória de Dados (EDA)**
