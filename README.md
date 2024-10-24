@@ -32,7 +32,7 @@ O foco é explorar a correlação entre valor de mercado e desempenho dos clubes
 
 ### **4. Modelagem Preditiva**
 - **Regressão Linear / Ridge / Lasso:** Previsão de desempenho dos jogadores.
-- **Clusterização:** Aplicação de K-Means ou DBSCAN para encontrar jogadores semelhantes.
+- **Clusterização:** Aplicação de K-Means para encontrar jogadores semelhantes.
 - **Classificação:** Prever classificação de times ou a performance futura dos jogadores.
 
 ### **5. Desenvolvimento de Insights**
