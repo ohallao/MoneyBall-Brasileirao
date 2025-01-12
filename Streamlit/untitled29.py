@@ -191,12 +191,12 @@ if uploaded_file is not None:
         # Exibir ranking
         st.write(f"### Ranking de Jogadores no perfil: {posicao_escolhida}")
         st.dataframe(
-            ranking["Ranking", "time", "posicao", "jogador", "Pontuacao_Total"],
+            ranking[["Ranking", "time", "posicao", "jogador", "Pontuacao_Total"]],
             height=400
         )
 
         # Opção para baixar o ranking como CSV
-        csv_ranking = ranking["Ranking", "time", "posicao", "jogador", "Pontuacao_Total"].to_csv(index=False).encode("utf-8")
+        csv_ranking = ranking[["Ranking", "time", "posicao", "jogador", "Pontuacao_Total"]].to_csv(index=False).encode("utf-8")
         st.download_button(
             label="Baixar ranking como CSV",
             data=csv_ranking,
