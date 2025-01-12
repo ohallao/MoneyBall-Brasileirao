@@ -107,6 +107,8 @@ Essa configuração permite que dados do Campeonato Brasileiro sejam mapeados co
 ## **Streamlit**
 - https://moneyball-brasileirao.streamlit.app/
 
+[streamlit-Streamlit_app-2025-01-12-00-01-96.webm](https://github.com/user-attachments/assets/f42e1d7d-e2c2-47c4-95e6-9f851c1ad73e)
+
 ---
 ## **Contribuições**
 Sinta-se à vontade para sugerir melhorias ou adicionar novas funcionalidades ao projeto.
