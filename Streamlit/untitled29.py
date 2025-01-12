@@ -101,36 +101,42 @@ if uploaded_file is not None:
         colunas = colunas_por_posicao[posicao_escolhida]
         pesos = pesos_por_posicao[posicao_escolhida]
 
-        # Filtrar colunas específicas da posição
-        df_filtrado = df[colunas]
+        # Verificar colunas disponíveis no DataFrame
+        colunas_disponiveis = [col for col in colunas if col in df.columns]
 
-        # Calcular pontuação
-        df_com_pontuacao = calcular_pontuacao(df_filtrado, pesos)
+        if not colunas_disponiveis:
+            st.error(f"Nenhuma coluna válida encontrada para a posição: {posicao_escolhida}")
+        else:
+            # Filtrar colunas específicas da posição
+            df_filtrado = df[colunas_disponiveis]
 
-        # Ordenar e ranquear jogadores
-        df_ordenado = df_com_pontuacao.sort_values(by='Pontuacao', ascending=False)
-        df_ordenado['Ranking'] = range(1, len(df_ordenado) + 1)
+            # Calcular pontuação
+            df_com_pontuacao = calcular_pontuacao(df_filtrado, pesos)
 
-        st.write(f"### Ranking de jogadores para posição: {posicao_escolhida}")
-        st.write(df_ordenado[['Ranking', 'jogador', 'time', 'Pontuacao']])
+            # Ordenar e ranquear jogadores
+            df_ordenado = df_com_pontuacao.sort_values(by='Pontuacao', ascending=False)
+            df_ordenado['Ranking'] = range(1, len(df_ordenado) + 1)
 
-        # Download do CSV
-        csv = df_ordenado.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="Baixar ranking como CSV",
-            data=csv,
-            file_name=f'ranking_{posicao_escolhida}.csv',
-            mime='text/csv',
-        )
+            st.write(f"### Ranking de jogadores para posição: {posicao_escolhida}")
+            st.write(df_ordenado[['Ranking', 'jogador', 'time', 'Pontuacao']])
 
-        # Gráfico de Radar
-        st.header("Comparação de Jogadores - Gráfico de Radar")
+            # Download do CSV
+            csv = df_ordenado.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="Baixar ranking como CSV",
+                data=csv,
+                file_name=f'ranking_{posicao_escolhida}.csv',
+                mime='text/csv',
+            )
 
-        jogadores_selecionados = st.multiselect(
-            "Selecione os jogadores para comparar:", df_ordenado['jogador'].unique()
-        )
+            # Gráfico de Radar
+            st.header("Comparação de Jogadores - Gráfico de Radar")
 
-        if jogadores_selecionados:
-            radar_chart_por_jogadores(jogadores_selecionados, df_ordenado, list(pesos.keys()))
+            jogadores_selecionados = st.multiselect(
+                "Selecione os jogadores para comparar:", df_ordenado['jogador'].unique()
+            )
+
+            if jogadores_selecionados:
+                radar_chart_por_jogadores(jogadores_selecionados, df_ordenado, list(pesos.keys()))
 else:
     st.write("Por favor, carregue um arquivo CSV na barra lateral.")
