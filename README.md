@@ -1,4 +1,3 @@
-
 # **MoneyBall Brasil - Análise de Dados no Futebol**
 
 Este projeto aplica conceitos de análise estatística e machine learning no contexto do futebol brasileiro, inspirado pela filosofia "MoneyBall". O objetivo é identificar eficiência e oportunidades no mercado futebolístico, encontrando clubes e jogadores que se destacam em termos de desempenho e custo-benefício.
@@ -10,6 +9,29 @@ O foco é explorar a correlação entre valor de mercado e desempenho dos clubes
 - Jogadores promissores e subvalorizados.
 - Clubes eficientes financeiramente.
 - Sugestões de contratações baseadas em dados.
+
+---
+
+## Estrutura do Projeto
+
+O projeto foi desenvolvido em duas etapas principais:
+
+### 1. **Análise Geral dos Times**
+Nesta etapa, foi realizada uma análise exploratória e comparativa dos clubes da Série A do Campeonato Brasileiro. 
+As principais métricas analisadas incluem:
+
+- Desempenho em campo (pontos, vitórias, derrotas, saldo de gols).
+- Eficiência financeira, considerando o valor de mercado dos elencos e o retorno esportivo.
+- Análise de tendências e padrões nos resultados dos clubes ao longo da temporada.
+
+### 2. **Clusterização por Posições**
+Nesta etapa, foram aplicadas técnicas de **clusterização** para agrupar jogadores de diferentes posições (goleiros, defensores, meio-campistas e atacantes) com base em seu desempenho. O objetivo foi:
+
+- Identificar **grupos de jogadores com características semelhantes**.
+- Encontrar **jogadores subvalorizados** dentro de cada posição.
+- Destacar **perfis ideais** para contratações, considerando custo-benefício.
+
+A clusterização foi feita utilizando algoritmos como **K-means**, e as variáveis incluíram dados de desempenho técnico, como gols, assistências, interceptações, passes completos, entre outros.
 
 ---
 
