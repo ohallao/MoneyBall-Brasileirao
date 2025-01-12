@@ -194,7 +194,10 @@ if uploaded_file is not None:
         colunas = colunas_por_posicao[posicao_escolhida]
         pesos = pesos_por_posicao[posicao_escolhida]
 
-        # Verificar colunas disponíveis no DataFrame
+        # Verificar colunas disponíveis no DataFrame e incluir 'Perfil' se estiver presente
+colunas_disponiveis = [col for col in colunas if col in df.columns]
+if 'Perfil' in df.columns and 'Perfil' not in colunas_disponiveis:
+    colunas_disponiveis.append('Perfil')
         colunas_disponiveis = [col for col in colunas if col in df.columns]
 
         if not colunas_disponiveis:
