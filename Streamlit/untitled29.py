@@ -211,7 +211,7 @@ if uploaded_file is not None:
             df_ordenado['Ranking'] = range(1, len(df_ordenado) + 1)
 
             st.write(f"### Ranking de jogadores para posição: {posicao_escolhida}")
-            st.write(df_ordenado[['Ranking', 'jogador', 'time', 'Pontuacao']])
+            st.write(df_ordenado[['Ranking', 'jogador', 'time', 'Perfil', 'Pontuacao']])
 
             # Download do CSV
             csv = df_ordenado.to_csv(index=False).encode('utf-8')
@@ -238,3 +238,4 @@ if uploaded_file is not None:
                 st.dataframe(tabela_metricas)
 else:
     st.write("Por favor, carregue um arquivo CSV na barra lateral.")
+
