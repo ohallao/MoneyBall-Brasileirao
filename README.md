@@ -105,7 +105,7 @@ Essa configuração permite que dados do Campeonato Brasileiro sejam mapeados co
 ---
 
 ## **Streamlit**
-- ** https://moneyball-brasileirao.streamlit.app/ **
+- https://moneyball-brasileirao.streamlit.app/
 
 ---
 ## **Contribuições**
