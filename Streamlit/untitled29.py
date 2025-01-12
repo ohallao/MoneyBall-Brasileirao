@@ -81,7 +81,7 @@ pesos_por_posicao = {
             'Duelos Aereoes W': 4,
             'Divididas Ganhas': 6,
             'Clearence': 5,
-            'Erros': 1
+            'Erros': -1
         },
         "Zagueiros": {
             'Prgc': 2,
@@ -231,5 +231,10 @@ if uploaded_file is not None:
 
             if jogadores_selecionados:
                 radar_chart_por_jogadores(jogadores_selecionados, df_ordenado, list(pesos.keys()))
+
+                # Exibir tabela com dados dos jogadores selecionados
+                st.write("### Estatísticas dos Jogadores Selecionados")
+                tabela_metricas = df_ordenado[df_ordenado['jogador'].isin(jogadores_selecionados)][colunas_disponiveis]
+                st.dataframe(tabela_metricas)
 else:
     st.write("Por favor, carregue um arquivo CSV na barra lateral.")
