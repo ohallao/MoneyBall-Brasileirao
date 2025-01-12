@@ -31,9 +31,8 @@ O foco é explorar a correlação entre valor de mercado e desempenho dos clubes
 - **Índices Defensivos:** Passes e interceptações eficazes para defensores.
 
 ### **4. Modelagem Preditiva**
-- **Regressão Linear / Ridge / Lasso:** Previsão de desempenho dos jogadores.
+- **Regressão Linear:** Prever classificação de times.
 - **Clusterização:** Aplicação de K-Means para encontrar jogadores semelhantes.
-- **Classificação:** Prever classificação de times ou a performance futura dos jogadores.
 
 ### **5. Desenvolvimento de Insights**
 - Identificação de **jogadores subvalorizados**.
@@ -105,6 +104,10 @@ Essa configuração permite que dados do Campeonato Brasileiro sejam mapeados co
 
 ---
 
+## **Streamlit**
+- ** https://moneyball-brasileirao.streamlit.app/ **
+
+---
 ## **Contribuições**
 Sinta-se à vontade para sugerir melhorias ou adicionar novas funcionalidades ao projeto.
 
