@@ -195,10 +195,9 @@ if uploaded_file is not None:
         pesos = pesos_por_posicao[posicao_escolhida]
 
         # Verificar colunas disponíveis no DataFrame e incluir 'Perfil' se estiver presente
-colunas_disponiveis = [col for col in colunas if col in df.columns]
-if 'Perfil' in df.columns and 'Perfil' not in colunas_disponiveis:
-    colunas_disponiveis.append('Perfil')
         colunas_disponiveis = [col for col in colunas if col in df.columns]
+        if 'Perfil' in df.columns and 'Perfil' not in colunas_disponiveis:
+            colunas_disponiveis.append('Perfil')
 
         if not colunas_disponiveis:
             st.error(f"Nenhuma coluna válida encontrada para a posição: {posicao_escolhida}")
@@ -241,4 +240,3 @@ if 'Perfil' in df.columns and 'Perfil' not in colunas_disponiveis:
                 st.dataframe(tabela_metricas)
 else:
     st.write("Por favor, carregue um arquivo CSV na barra lateral.")
-
