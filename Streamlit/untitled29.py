@@ -222,3 +222,4 @@ if uploaded_file is not None:
 
     else:
         st.write("Não há métricas definidas para esta posição.")
+
