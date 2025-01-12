@@ -10,7 +10,7 @@ colunas_por_posicao = {
     "Pontas": [...],
     "Volantes": [...],
     "Zagueiros": [...],
-    "Laterais": [...],
+    "Lat": [...],
     "Atacantes": [...]
 }
 
@@ -20,7 +20,7 @@ pesos_por_posicao = {
     "Pontas": {...},
     "Volantes": {...},
     "Zagueiros": {...},
-    "Laterais": {...},
+    "Lat": {...},
     "Atacantes": {...}
 }
 
