@@ -207,5 +207,14 @@ if uploaded_file is not None:
         )
         if jogadores_selecionados:
             radar_chart_por_jogadores(jogadores_selecionados, df, list(pesos.keys()))
+
+        # Adicionar Tabela de Estatísticas dos Jogadores Selecionados
+        st.header("Estatísticas dos Jogadores Selecionados")
+        colunas_disponiveis = st.multiselect(
+            "Selecione as colunas para exibir na tabela:", df.columns, default=colunas_por_posicao[posicao_escolhida]
+        )
+        if colunas_disponiveis:
+            st.write(df[df["jogador"].isin(jogadores_selecionados)][colunas_disponiveis])
+
     else:
         st.write("Não há métricas definidas para esta posição.")
