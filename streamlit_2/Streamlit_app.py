@@ -14,6 +14,10 @@ colunas_por_posicao = {
     "Atacantes": ["jogador", "time", "posicao", "xG", "xAG", "G-PK", "Assistencias", "Acoes Ofensivas", "Aerial Duel%"]
 }
 
+# Inicializar session state para armazenar pesos
+if "pesos" not in st.session_state:
+    st.session_state.pesos = {}
+
 # Função para calcular pontuação personalizada
 def calcular_pontuacao(df, pesos):
     for coluna, peso in pesos.items():
@@ -66,23 +70,44 @@ else:
 
         # Ajuste dinâmico dos pesos
         st.sidebar.subheader("Ajuste os Pesos")
-        pesos_customizados = {}
         for coluna in colunas[3:]:
-            pesos_customizados[coluna] = st.sidebar.slider(f"Peso para {coluna}", -10.0, 10.0, 1.0, 0.1)
+            if coluna not in st.session_state.pesos:
+                st.session_state.pesos[coluna] = 1.0
+            st.session_state.pesos[coluna] = st.sidebar.slider(f"Peso para {coluna}", -10.0, 10.0, st.session_state.pesos[coluna], 0.1)
         
         if st.sidebar.button("Redefinir Pesos"):
-            pesos_customizados = {coluna: 1.0 for coluna in colunas[3:]}  # Redefinir para o valor padrão
+            for coluna in colunas[3:]:
+                st.session_state.pesos[coluna] = 1.0
 
-        df_com_pontuacao = calcular_pontuacao(df_filtrado, pesos_customizados)
+        df_com_pontuacao = calcular_pontuacao(df_filtrado, st.session_state.pesos)
         df_ordenado = df_com_pontuacao.sort_values(by='Pontuacao', ascending=False)
         df_ordenado['Ranking'] = range(1, len(df_ordenado) + 1)
 
         st.write(f"### Ranking de jogadores para posição: {posicao_escolhida}")
         st.dataframe(df_ordenado[['Ranking', 'jogador', 'time', 'Pontuacao']])
 
-        # Comparação entre jogadores
+        # Comparação entre jogadores - Gráfico de Radar
         st.header("Comparação de Jogadores - Gráfico de Radar")
         jogadores_selecionados = st.multiselect("Selecione jogadores:", df_ordenado['jogador'].unique())
         if jogadores_selecionados:
+            num_vars = len(st.session_state.pesos)
+            angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+            angles += angles[:1]
+
+            fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
+            for jogador in jogadores_selecionados:
+                jogador_dados = df_ordenado[df_ordenado['jogador'] == jogador]
+                valores = [jogador_dados[col].values[0] for col in st.session_state.pesos.keys()]
+                valores = [(v - min(valores)) / (max(valores) - min(valores) + 1e-5) for v in valores]
+                valores += valores[:1]
+                ax.plot(angles, valores, label=jogador)
+                ax.fill(angles, valores, alpha=0.25)
+
+            ax.set_xticks(angles[:-1])
+            ax.set_xticklabels(st.session_state.pesos.keys(), fontsize=10, color='blue')
+            plt.legend(loc='upper right', bbox_to_anchor=(1.3, 1))
+            plt.title("Comparação de Jogadores", size=15)
+            st.pyplot(fig)
+
             st.write("### Estatísticas dos Jogadores Selecionados")
             st.dataframe(df_ordenado[df_ordenado['jogador'].isin(jogadores_selecionados)])
