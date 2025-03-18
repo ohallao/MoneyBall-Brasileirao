@@ -29,7 +29,13 @@ def calcular_pontuacao(df, pesos):
     df['Pontuacao'] = (df['Pontuacao_Total'] - df['Pontuacao_Total'].min()) / (df['Pontuacao_Total'].max() - df['Pontuacao_Total'].min()) * 100
     return df
 
-# Função para carregar múltiplos arquivos CSV de um repositório do GitHub
+# Função para normalizar valores proporcionalmente
+def normalizar_valores(valores):
+    min_val = min(valores)
+    max_val = max(valores)
+    return [(v - min_val) / (max_val - min_val + 1e-5) for v in valores]
+
+# Carregar os dados automaticamente do GitHub
 def carregar_dados_github():
     base_url = "https://raw.githubusercontent.com/ohallao/MoneyBall-Brasileirao/main/Output_Cluster/"
     arquivos = ["Gol_clusters_full.csv", "Mei_clusters_full.csv", "Ponta_clusters_full.csv", "vol_clusters_full.csv", "Zag_clusters_full.csv", "Lat_clusters_full.csv", "striker_clusters_full.csv"]
@@ -45,7 +51,6 @@ def carregar_dados_github():
     
     return pd.concat(dfs, ignore_index=True) if dfs else pd.DataFrame()
 
-# Carregar os dados automaticamente do GitHub
 df = carregar_dados_github()
 
 st.title("MoneyBall Brasileirao - Análise por Posição")
@@ -56,19 +61,16 @@ else:
     st.write("### Dados do Arquivo")
     st.dataframe(df, height=300)
 
-    # Filtro por posição
     posicao_escolhida = st.sidebar.selectbox("Escolha uma posição", options=colunas_por_posicao.keys())
     if posicao_escolhida:
         colunas = colunas_por_posicao[posicao_escolhida]
         df_filtrado = df[colunas].dropna()
 
-        # Filtro por time
         times_disponiveis = df_filtrado['time'].unique()
         time_selecionado = st.sidebar.selectbox("Filtrar por time", options=["Todos"] + list(times_disponiveis))
         if time_selecionado != "Todos":
             df_filtrado = df_filtrado[df_filtrado['time'] == time_selecionado]
 
-        # Ajuste dinâmico dos pesos
         st.sidebar.subheader("Ajuste os Pesos")
         for coluna in colunas[3:]:
             if coluna not in st.session_state.pesos:
@@ -86,7 +88,6 @@ else:
         st.write(f"### Ranking de jogadores para posição: {posicao_escolhida}")
         st.dataframe(df_ordenado[['Ranking', 'jogador', 'time', 'Pontuacao']])
 
-        # Comparação entre jogadores - Gráfico de Radar
         st.header("Comparação de Jogadores - Gráfico de Radar")
         jogadores_selecionados = st.multiselect("Selecione jogadores:", df_ordenado['jogador'].unique())
         if jogadores_selecionados:
@@ -98,7 +99,7 @@ else:
             for jogador in jogadores_selecionados:
                 jogador_dados = df_ordenado[df_ordenado['jogador'] == jogador]
                 valores = [jogador_dados[col].values[0] for col in st.session_state.pesos.keys()]
-                valores = [(v - min(valores)) / (max(valores) - min(valores) + 1e-5) for v in valores]
+                valores = normalizar_valores(valores)
                 valores += valores[:1]
                 ax.plot(angles, valores, label=jogador)
                 ax.fill(angles, valores, alpha=0.25)
@@ -111,3 +112,4 @@ else:
 
             st.write("### Estatísticas dos Jogadores Selecionados")
             st.dataframe(df_ordenado[df_ordenado['jogador'].isin(jogadores_selecionados)])
+
