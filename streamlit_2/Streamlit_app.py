@@ -69,6 +69,9 @@ else:
         pesos_customizados = {}
         for coluna in colunas[3:]:
             pesos_customizados[coluna] = st.sidebar.slider(f"Peso para {coluna}", -10.0, 10.0, 1.0, 0.1)
+        
+        if st.sidebar.button("Redefinir Pesos"):
+            pesos_customizados = {coluna: 1.0 for coluna in colunas[3:]}  # Redefinir para o valor padrão
 
         df_com_pontuacao = calcular_pontuacao(df_filtrado, pesos_customizados)
         df_ordenado = df_com_pontuacao.sort_values(by='Pontuacao', ascending=False)
@@ -77,34 +80,9 @@ else:
         st.write(f"### Ranking de jogadores para posição: {posicao_escolhida}")
         st.dataframe(df_ordenado[['Ranking', 'jogador', 'time', 'Pontuacao']])
 
-        # Histograma de pontuação
-        st.header("Distribuição de Pontuação")
-        fig, ax = plt.subplots()
-        ax.hist(df_ordenado['Pontuacao'], bins=20, edgecolor='black')
-        ax.set_xlabel("Pontuação")
-        ax.set_ylabel("Quantidade de Jogadores")
-        ax.set_title("Distribuição de Pontuação por Posição")
-        st.pyplot(fig)
-
         # Comparação entre jogadores
         st.header("Comparação de Jogadores - Gráfico de Radar")
         jogadores_selecionados = st.multiselect("Selecione jogadores:", df_ordenado['jogador'].unique())
         if jogadores_selecionados:
-            num_vars = len(pesos_customizados)
-            angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-            angles += angles[:1]
-
-            fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
-            for jogador in jogadores_selecionados:
-                jogador_dados = df_ordenado[df_ordenado['jogador'] == jogador]
-                valores = [jogador_dados[col].values[0] for col in pesos_customizados.keys()]
-                valores = [(v - min(valores)) / (max(valores) - min(valores) + 1e-5) for v in valores]
-                valores += valores[:1]
-                ax.plot(angles, valores, label=jogador)
-                ax.fill(angles, valores, alpha=0.25)
-
-            ax.set_xticks(angles[:-1])
-            ax.set_xticklabels(pesos_customizados.keys(), fontsize=10, color='blue')
-            plt.legend(loc='upper right', bbox_to_anchor=(1.3, 1))
-            plt.title("Comparação de Jogadores", size=15)
-            st.pyplot(fig)
+            st.write("### Estatísticas dos Jogadores Selecionados")
+            st.dataframe(df_ordenado[df_ordenado['jogador'].isin(jogadores_selecionados)])
