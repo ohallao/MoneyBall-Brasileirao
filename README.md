@@ -1,4 +1,5 @@
 # **MoneyBall Brasil - Análise de Dados no Futebol**
+https://moneyballbrasil.streamlit.app/
 
 Este projeto aplica conceitos de análise estatística e machine learning no contexto do futebol brasileiro, inspirado pela filosofia "MoneyBall". O objetivo é identificar eficiência e oportunidades no mercado futebolístico, encontrando clubes e jogadores que se destacam em termos de desempenho e custo-benefício.
 
@@ -127,9 +128,9 @@ Essa configuração permite que dados do Campeonato Brasileiro sejam mapeados co
 ---
 
 ## **Streamlit**
-- https://moneyball-brasileirao.streamlit.app/
+- [https://moneyball-brasileirao.streamlit.app/](https://moneyballbrasil.streamlit.app/)
 
-[streamlit-Streamlit_app-2025-01-12-00-01-96.webm](https://github.com/user-attachments/assets/f42e1d7d-e2c2-47c4-95e6-9f851c1ad73e)
+
 
 ---
 ## **Contribuições**
