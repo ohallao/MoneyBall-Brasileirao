@@ -91,21 +91,22 @@ else:
         st.header("Comparação de Jogadores - Gráfico de Radar")
         jogadores_selecionados = st.multiselect("Selecione jogadores:", df_ordenado['jogador'].unique())
         if jogadores_selecionados:
-            num_vars = len(st.session_state.pesos)
+            colunas_validas = [col for col in st.session_state.pesos.keys() if col in df_ordenado.columns]
+            num_vars = len(colunas_validas)
             angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
             angles += angles[:1]
 
             fig, ax = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
             for jogador in jogadores_selecionados:
                 jogador_dados = df_ordenado[df_ordenado['jogador'] == jogador]
-                valores = [jogador_dados[col].values[0] for col in st.session_state.pesos.keys()]
+                valores = [jogador_dados[col].values[0] for col in colunas_validas]
                 valores = normalizar_valores(valores)
                 valores += valores[:1]
                 ax.plot(angles, valores, label=jogador)
                 ax.fill(angles, valores, alpha=0.25)
 
             ax.set_xticks(angles[:-1])
-            ax.set_xticklabels(st.session_state.pesos.keys(), fontsize=10, color='blue')
+            ax.set_xticklabels(colunas_validas, fontsize=10, color='blue')
             plt.legend(loc='upper right', bbox_to_anchor=(1.3, 1))
             plt.title("Comparação de Jogadores", size=15)
             st.pyplot(fig)
