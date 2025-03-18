@@ -14,6 +14,17 @@ colunas_por_posicao = {
     "Atacantes": ["jogador", "time", "posicao", "xG", "xAG", "G-PK", "Assistencias", "Acoes Ofensivas", "Aerial Duel%"]
 }
 
+# Função para calcular pontuação personalizada
+def calcular_pontuacao(df, pesos):
+    for coluna, peso in pesos.items():
+        if coluna in df.columns:
+            df[coluna + '_Pontuacao'] = df[coluna].fillna(0) * peso
+
+    colunas_pontuacao = [coluna + '_Pontuacao' for coluna in pesos.keys() if coluna in df.columns]
+    df['Pontuacao_Total'] = df[colunas_pontuacao].sum(axis=1)
+    df['Pontuacao'] = (df['Pontuacao_Total'] - df['Pontuacao_Total'].min()) / (df['Pontuacao_Total'].max() - df['Pontuacao_Total'].min()) * 100
+    return df
+
 # Função para carregar múltiplos arquivos CSV de um repositório do GitHub
 def carregar_dados_github():
     base_url = "https://raw.githubusercontent.com/ohallao/MoneyBall-Brasileirao/main/Output_Cluster/"
